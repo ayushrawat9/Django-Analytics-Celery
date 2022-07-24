@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.plot.ly/plotly-2.12.1.min.js"></script>
+</head>
+<body>
+    <div class="main">
+        <form class="form" id = "form" action="" method="post" data-app-name="{% url 'load_app_name' %}">
+            {% csrf_token %}
+            <label for="from">From:</label>
+            <input type="date" id="from" name="from">
+
+            <label for="to">To:</label>
+            <input type="date" id="to" name="to">
+
+            <!-- <input class="un " type="text" id='app_name' name='app_name' align="center"> -->
+            <label for="dog-names">Select app name:</label>
+            <select class="un " id='app_name' name = "app_name">
+                <!-- {% for app in app_name %}
+                <option value ={{ app.app_name }}>{{ app.app_name }} </option>
+                {% endfor %} -->
+            <select>
+            <input type="submit" class="submit" value = "Submit"/>
+        </form>
+    {% if plot_div1 %}
+    </div>
+     <!-- {% for i,v in daily_active_users.items %}
+     <p>{{ i }} : {{ v }} </p>
+     {% endfor %}  -->
+     <div class = "plot1">
+     {% autoescape off %}
+     <h4>Daily Active User</h4>
+    {{ plot_div1 }}
+    <h4>Installs</h4>
+    {{ plot_div2 }}
+    <h4>Revenue</h4>
+    {{ plot_div3 }}
+    {% endautoescape %}
+     </div> 
+    {% endif %}
+     <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<script>
+    $("#to").click(function () {
+        const url = $("#form").attr("data-app-name");  
+
+        $.ajax({                       
+            url: url,                    
+            success: function (data) {   
+                $("#app_name").html(data);
+                console.log(data) 
+                
+                let html_data = '<option value="">Select app name:</option>';
+                data.forEach(function (app) {
+                    html_data += `<option value="${app.app_name}">${app.app_name}</option>`
+                });
+                console.log(html_data);
+                $("#app_name").html(html_data);
+                
+            }
+        });
+
+    });
+</script> 
+</body>
+</html>
