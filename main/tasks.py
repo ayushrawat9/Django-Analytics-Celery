@@ -2,11 +2,6 @@ from celery import shared_task
 from .models import PackageInfo
 import requests
 
-@shared_task(bind = True)
-def test_func(self):
-    for i in range(10):
-        print(i)
-    return "Done"
 
 @shared_task(bind = True)
 def updatedb(self):
@@ -17,6 +12,4 @@ def updatedb(self):
         p.package_id=item["package_id"]
         p.date_wise_metrics = item["date_wise_metrics"]
         p.save()
-    for i in range(10):
-        print(100)
     return "Done"
