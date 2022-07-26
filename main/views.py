@@ -6,7 +6,6 @@ import requests
 from .models import PackageInfo
 from datetime import datetime
 from dateutil import parser
-import collections
 # Create your views here.
 
 def test(request):
@@ -25,10 +24,6 @@ def test(request):
     for item in res:
         s.add(item["package_id"])
         l.append(item['package_id'])
-    frequency = collections.Counter(l)
-    print(frequency )
-    print(len(s))
-    print(len(res))
     for item in res:
         p = PackageInfo.objects.create(package_id=item["package_id"],
                                         app_name=item["app_name"],
@@ -78,7 +73,6 @@ def get_data(request):
             temp=[]
             for date in data:
                 date_new = parser.parse(date).date()
-                print(date_new)
                 temp.append(date_new)
             xdatat.append(temp)
         xdata=xdatat.copy()
